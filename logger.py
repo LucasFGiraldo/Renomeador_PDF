@@ -1,5 +1,4 @@
 from datetime import datetime
-
 import config
 
 def registrar_sucesso(arquivo_original, novo_nome):

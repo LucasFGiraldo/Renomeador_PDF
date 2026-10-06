@@ -5,9 +5,6 @@ import monitor
 
 
 def preparar_pastas():
-    """Garante que as pastas necessárias existam antes de iniciar o
-    monitoramento."""
-
     os.makedirs(config.PASTA_RESULTADOS, exist_ok=True)
 
     if not os.path.isdir(config.PASTA_ENTRADA):

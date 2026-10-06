@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import time
 import shutil
@@ -9,11 +7,6 @@ import processador
 
 
 def _arquivo_esta_estavel(caminho):
-    """
-    Verifica se o arquivo parou de ser copiado/gravado na pasta,
-    comparando o tamanho em dois instantes. Isso evita tentar ler um
-    PDF que ainda está sendo colado na pasta (arquivo incompleto).
-    """
     try:
         tamanho1 = os.path.getsize(caminho)
         time.sleep(config.TEMPO_ESPERA_ARQUIVO)
@@ -25,11 +18,10 @@ def _arquivo_esta_estavel(caminho):
 
 
 def _mover_para_pasta_erro(caminho_pdf):
-    """Move um PDF que falhou no processamento para uma subpasta
-    dentro da própria PASTA_ENTRADA, evitando que ele seja
-    reprocessado (e re-logado como erro) a cada nova varredura."""
+    #Move um PDF que falhou no processamento para uma subpasta
+    #dentro da PASTA_SAIDA, evitando que ele seja reprocessado (e re-logado como erro) a cada nova varredura.
 
-    pasta_erro = os.path.join(config.PASTA_ENTRADA, config.PASTA_ERROS_PDF)
+    pasta_erro = os.path.join(config.PASTA_SAIDA, config.PASTA_ERROS_PDF)
     os.makedirs(pasta_erro, exist_ok=True)
 
     destino = os.path.join(pasta_erro, os.path.basename(caminho_pdf))
@@ -69,8 +61,6 @@ def _listar_pdfs_pendentes():
 
 
 def processar_pasta_uma_vez():
-    """Faz uma única varredura da pasta de entrada, processando todos
-    os PDFs estáveis encontrados no momento."""
 
     if not os.path.isdir(config.PASTA_ENTRADA):
         print(f"✖ Pasta de entrada não encontrada: {config.PASTA_ENTRADA}")
@@ -90,9 +80,6 @@ def processar_pasta_uma_vez():
 
 
 def monitorar_pasta(intervalo=None):
-    """Loop contínuo: varre a pasta de entrada a cada `intervalo`
-    segundos, processando novos PDFs conforme chegam. Roda até o
-    usuário interromper com CTRL+C."""
 
     intervalo = intervalo or config.INTERVALO_MONITORAMENTO
 
