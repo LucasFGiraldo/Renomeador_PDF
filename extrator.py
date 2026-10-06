@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Responsável por extrair, do TEXTO do PDF, as informações que variam
 de um arquivo para outro (cliente/favorecido, data, valor, etc.).
@@ -23,13 +22,6 @@ import re
 
 
 def extrair_informacoes(texto):
-    """
-    Recebe o texto extraído do PDF e devolve um dicionário com os
-    campos variáveis encontrados. Campos não encontrados simplesmente
-    não entram no dicionário (quem decide se isso é erro é o
-    renomeador, com base no que o usuário marcou como obrigatório).
-    """
-
     dados = {}
 
     cliente = _extrair_cliente(texto)
@@ -130,7 +122,6 @@ def _extrair_valor(texto):
 
 
 def _limpar(texto):
-    """Remove espaços nas pontas e limita o tamanho para não gerar
-    nomes de arquivo absurdamente longos."""
+    #Remove espaços nas pontas e limita o tamanho para não gerar nomes de arquivo absurdamente longos."""
     texto = texto.strip()
     return texto[:60]

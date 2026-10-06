@@ -3,22 +3,9 @@ import re
 import shutil
 import config
 
-
 def criar_nome_arquivo(config_usuario, dados_pdf):
-    """
-    Monta o nome final do arquivo combinando:
-      - a parte FIXA (informada pelo usuário no início da execução)
-      - as partes VARIÁVEIS (extraídas do conteúdo do PDF), de acordo
-        com o que o usuário marcou como "incluir" (S/N).
-
-    Lança ValueError se um campo marcado como obrigatório (S) não foi
-    encontrado no PDF - o chamador decide o que fazer (ex.: mover para
-    pasta de erro).
-    """
-
     partes = []
 
-    
     if config_usuario.get("incluir_data") == "S":
         data = dados_pdf.get("data")
         if not data:
@@ -52,8 +39,6 @@ def criar_nome_arquivo(config_usuario, dados_pdf):
 
 
 def _sanitizar(texto):
-    """Remove/normaliza caracteres inválidos para nomes de arquivo no
-    Windows e troca espaços por underscore."""
     texto = texto.strip()
     texto = re.sub(r"\s+", "_", texto)
     texto = re.sub(r'[\\/:*?"<>|]', "", texto)
@@ -62,10 +47,6 @@ def _sanitizar(texto):
 
 
 def _resolver_duplicado(caminho_destino):
-    """Se já existir um arquivo com esse nome em RESULTADOS, acrescenta
-    um contador (_2, _3, ...) até achar um nome livre. Isso garante que
-    nenhum arquivo seja sobrescrito por engano."""
-
     if not os.path.exists(caminho_destino):
         return caminho_destino
 

@@ -2,10 +2,7 @@ import config
 
 
 def solicitar_configuracoes():
-    """
-    Solicita ao usuário as configurações fixas do sistema
-    e sobrescreve o arquivo config_usuario.txt.
-    """
+    #Solicita ao usuário as configurações fixas do sistema e sobrescreve o arquivo config_usuario.txt.
 
     print("=" * 50)
     print("CONFIGURAÇÃO DO SISTEMA")
