@@ -61,12 +61,3 @@ linhas de forma diferente do PDF visual).
   onde vão os PDFs que falharam.
 
 Ambas as pastas são criadas automaticamente se não existirem.
-
-## Teste rápido sem PDF real
-
-```bash
-python teste.py
-```
-
-Isso testa só a lógica de montagem do nome do arquivo
-(`renomeador.py`), sem precisar de PDF nem das pastas de rede.
