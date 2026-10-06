@@ -1,0 +1,4 @@
+sufixo=COMP
+incluir_data=S
+incluir_valor=S
+incluir_nome=S

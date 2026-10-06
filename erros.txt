@@ -1,0 +1,70 @@
+
+==============================
+Data/Hora: 15-09-2026 14:10:46
+Arquivo Original: Bradesco_15092026_131453-1.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:10:49
+Arquivo Original: Bradesco_15092026_131453-2.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:10:51
+Arquivo Original: Bradesco_15092026_131453-3.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:10:53
+Arquivo Original: Bradesco_15092026_131453-4.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:10:55
+Arquivo Original: Bradesco_15092026_131453-5.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:10:57
+Arquivo Original: Bradesco_15092026_131453-6.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:00
+Arquivo Original: Bradesco_15092026_131453-7.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:02
+Arquivo Original: Bradesco_15092026_131453-8.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:04
+Arquivo Original: Bradesco_15092026_131559-1.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:06
+Arquivo Original: Bradesco_15092026_131559-2.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:09
+Arquivo Original: Bradesco_15092026_131559-3.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:11
+Arquivo Original: Bradesco_15092026_131559-4.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:13
+Arquivo Original: Bradesco_15092026_131559-5.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
+
+==============================
+Data/Hora: 15-09-2026 14:11:15
+Arquivo Original: Bradesco_15092026_131559-6.pdf
+Erro: Nome do favorecido/cliente não encontrado no PDF (campo marcado como obrigatório).
