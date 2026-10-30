@@ -21,7 +21,7 @@ def _mover_para_pasta_erro(caminho_pdf):
     #Move um PDF que falhou no processamento para uma subpasta
     #dentro da PASTA_SAIDA, evitando que ele seja reprocessado (e re-logado como erro) a cada nova varredura.
 
-    pasta_erro = os.path.join(config.PASTA_SAIDA, config.PASTA_ERROS_PDF)
+    pasta_erro = os.path.join(config.PASTA_RESULTADOS, config.PASTA_ERROS_PDF)
     os.makedirs(pasta_erro, exist_ok=True)
 
     destino = os.path.join(pasta_erro, os.path.basename(caminho_pdf))
