@@ -1,0 +1,65 @@
+<main>
+  <h1>Painel</h1>
+
+  @let status = estado.status();
+
+  <div class="painel numeros">
+    <div><span class="peq suave">Na fila</span><b>{{ status?.fila ?? '–' }}</b></div>
+    <div><span class="peq suave">Renomeados hoje</span><b>{{ status?.hoje?.sucessos ?? '–' }}</b></div>
+    <div><span class="peq suave">Erros hoje</span><b>{{ status?.hoje?.erros ?? '–' }}</b></div>
+    <div>
+      <span class="peq suave">Na pasta de erros</span>
+      <b [class.erro]="status?.com_erro">{{ status?.com_erro ?? '–' }}</b>
+    </div>
+  </div>
+
+  <div class="grade">
+    <div class="painel">
+      <div class="cab">Últimos renomeados <a routerLink="/historico">Ver histórico</a></div>
+      @for (r of recentes(); track $index) {
+        <div class="linha">
+          <div class="textos">
+            <div class="mono">{{ r.novo_nome }}</div>
+            <div class="peq suave">{{ r.arquivo_original }}</div>
+          </div>
+          <span class="peq suave">{{ hora(r) }}</span>
+        </div>
+      } @empty {
+        <div class="vazio">Nenhum PDF renomeado ainda.</div>
+      }
+    </div>
+
+    <div class="lateral">
+      <div class="painel">
+        <div class="cab">Enviar PDFs</div>
+        <label
+          class="envio"
+          [class.arrastando]="arrastando()"
+          (dragover)="$event.preventDefault(); arrastando.set(true)"
+          (dragleave)="arrastando.set(false)"
+          (drop)="soltar($event)"
+        >
+          <input #entrada type="file" accept=".pdf" multiple hidden (change)="escolher(entrada)" />
+          <div>Arraste os PDFs para cá</div>
+          <div class="peq suave">ou clique para escolher</div>
+        </label>
+        @if (envio(); as e) {
+          <div class="peq resultado" [class.erro]="e.erro" [class.suave]="!e.erro">{{ e.texto }}</div>
+        }
+      </div>
+
+      <div class="painel">
+        <div class="cab">Pastas</div>
+        @for (p of pastas(); track p.nome) {
+          <div class="pasta">
+            <div class="peq nome-pasta">
+              {{ p.nome }}
+              @if (!p.pasta.acessivel) { <span class="erro">· inacessível</span> }
+            </div>
+            <div class="mono suave">{{ p.pasta.caminho }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</main>

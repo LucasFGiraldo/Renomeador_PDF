@@ -1,0 +1,25 @@
+.form {
+  width: 560px;
+}
+.corpo {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rodape {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--borda);
+}
+.aviso {
+  flex: 1;
+}

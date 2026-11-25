@@ -1,0 +1,83 @@
+.grade {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.lista {
+  width: 340px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+}
+.item {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--borda);
+  cursor: pointer;
+  word-break: break-all;
+}
+.item:last-child {
+  border-bottom: 0;
+}
+.item.sel {
+  background: var(--selecao);
+}
+.item:focus-visible {
+  outline: 1px solid var(--primaria);
+  outline-offset: -1px;
+}
+
+.detalhe {
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.titulo {
+  font-size: 14px;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+.corpo {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.pdf {
+  width: 380px;
+  height: 520px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+}
+.formulario {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dupla {
+  display: flex;
+  gap: 12px;
+}
+.dupla > * {
+  flex: 1;
+}
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.acoes {
+  display: flex;
+  gap: 12px;
+}
+.acoes a {
+  text-decoration: none;
+}

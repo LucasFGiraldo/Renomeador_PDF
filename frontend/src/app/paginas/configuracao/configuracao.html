@@ -1,0 +1,51 @@
+<main>
+  <h1>Configuração</h1>
+
+  @let c = config();
+
+  <div class="painel form">
+    <div class="cab">Nome do arquivo</div>
+
+    <div class="corpo">
+      <div class="campo">
+        <label for="sufixo">Sufixo</label>
+        <input
+          id="sufixo"
+          maxlength="30"
+          [value]="c.sufixo"
+          [class.falta]="!c.sufixo.trim()"
+          (input)="alterar('sufixo', $any($event.target).value.toUpperCase())"
+        />
+      </div>
+
+      <div class="grupo">
+        <span class="rotulo">Incluir no nome</span>
+        <label class="check">
+          <input type="checkbox" [checked]="c.incluir_data" (change)="alterar('incluir_data', $any($event.target).checked)" />
+          Data do pagamento
+        </label>
+        <label class="check">
+          <input type="checkbox" [checked]="c.incluir_nome" (change)="alterar('incluir_nome', $any($event.target).checked)" />
+          Favorecido
+        </label>
+        <label class="check">
+          <input type="checkbox" [checked]="c.incluir_valor" (change)="alterar('incluir_valor', $any($event.target).checked)" />
+          Valor
+        </label>
+      </div>
+
+      <div class="grupo">
+        <span class="rotulo">Prévia</span>
+        <div class="nome mono">{{ previa() }}</div>
+      </div>
+    </div>
+
+    <div class="rodape">
+      @if (aviso(); as a) {
+        <span class="peq aviso" [class.erro]="a.erro" [class.suave]="!a.erro">{{ a.texto }}</span>
+      }
+      <button class="btn" (click)="carregar()">Descartar</button>
+      <button class="btn prim" (click)="salvar()" [disabled]="salvando() || !c.sufixo.trim()">Salvar</button>
+    </div>
+  </div>
+</main>

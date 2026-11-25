@@ -417,6 +417,34 @@ def _info_pasta(caminho):
     return {"caminho": caminho, "acessivel": os.path.isdir(caminho)}
 
 
+# ---------------------------------------------------------------------
+# Interface web (Angular já compilado na pasta "interface")
+# ---------------------------------------------------------------------
+
+PASTA_INTERFACE = os.path.abspath("interface")
+
+
+@app.get("/{caminho:path}", include_in_schema=False)
+def interface(caminho: str):
+    # Fica por último: só responde o que não for rota da API
+    if caminho.startswith("api/"):
+        raise HTTPException(404, "Rota não encontrada.")
+    indice = os.path.join(PASTA_INTERFACE, "index.html")
+    if not os.path.isfile(indice):
+        raise HTTPException(
+            404, "Interface não encontrada. Rode 'npm run build' na pasta frontend."
+        )
+    arquivo = os.path.abspath(os.path.join(PASTA_INTERFACE, caminho))
+    if (
+        caminho
+        and os.path.commonpath([arquivo, PASTA_INTERFACE]) == PASTA_INTERFACE
+        and os.path.isfile(arquivo)
+    ):
+        return FileResponse(arquivo)
+    # Rotas do Angular (/painel, /erros...) abrem sempre o index.html
+    return FileResponse(indice)
+
+
 if __name__ == "__main__":
     # Só aceita conexões deste computador
     uvicorn.run(app, host="127.0.0.1", port=8000)

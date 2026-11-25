@@ -1,0 +1,80 @@
+.numeros {
+  display: flex;
+}
+.numeros > div {
+  flex: 1;
+  padding: 16px 20px;
+  border-right: 1px solid var(--borda);
+}
+.numeros > div:last-child {
+  border-right: 0;
+}
+.numeros b {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.grade {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.grade > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+.lateral {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--borda);
+}
+.linha:last-child {
+  border-bottom: 0;
+}
+.textos {
+  flex: 1;
+  min-width: 0;
+  word-break: break-all;
+}
+
+.envio {
+  display: block;
+  margin: 20px;
+  padding: 28px;
+  border: 1px dashed var(--borda);
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+.envio.arrastando {
+  border-color: var(--primaria);
+  background: var(--sutil);
+}
+.resultado {
+  padding: 0 20px 16px;
+}
+
+.pasta {
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--borda);
+}
+.pasta:last-child {
+  border-bottom: 0;
+}
+.nome-pasta {
+  font-weight: 500;
+}
+.pasta .mono {
+  word-break: break-all;
+}

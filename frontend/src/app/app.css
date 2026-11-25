@@ -1,0 +1,37 @@
+header {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 12px 48px;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borda);
+}
+
+.marca {
+  font-weight: 600;
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+}
+
+nav a {
+  color: var(--suave);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+nav a.ativo {
+  color: var(--texto);
+  font-weight: 600;
+}
+
+.monitor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}

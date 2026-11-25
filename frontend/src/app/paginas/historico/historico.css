@@ -1,0 +1,44 @@
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.busca {
+  width: 360px;
+}
+.espaco {
+  flex: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--suave);
+  background: var(--sutil);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--borda);
+}
+td {
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--borda);
+  vertical-align: top;
+  word-break: break-all;
+}
+.c-data { width: 130px; }
+.c-orig { width: 260px; }
+.c-status { width: 110px; }
+
+.paginas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+}
+.paginas span {
+  flex: 1;
+}

@@ -36,13 +36,16 @@ Pressione `CTRL+C` para parar.
 python main.py
 ```
 
-**Modo API (para a interface web)** — sobe um servidor local; a
-configuração e o monitor passam a ser controlados pela tela (ou pela
-documentação interativa em http://localhost:8000/docs).
+**Modo interface web** — sobe um servidor local com as telas (Painel,
+Configuração, Histórico e Erros). Abra **http://localhost:8000** no
+navegador; a configuração e o monitor passam a ser controlados por lá.
 
 ```bash
 python api.py
 ```
+
+As telas já vêm compiladas na pasta `interface/`, então o computador
+que só *usa* o sistema não precisa de Node.js.
 
 Principais rotas da API:
 
@@ -58,6 +61,7 @@ Principais rotas da API:
 | `POST /api/erros/{arquivo}/reprocessar` | Tenta de novo, com dados corrigidos à mão (opcional) |
 | `POST /api/pdfs` | Envia PDFs para a pasta de entrada |
 
+A documentação interativa da API fica em http://localhost:8000/docs.
 A API só aceita conexões do próprio computador (`127.0.0.1`).
 Além do `historico.txt` e do `erros.txt`, os eventos também são
 gravados em `registros.jsonl`, que é o que a interface lê.
@@ -101,3 +105,21 @@ linhas de forma diferente do PDF visual).
   onde vão os PDFs que falharam.
 
 Ambas as pastas são criadas automaticamente se não existirem.
+## Desenvolvendo a interface (Angular)
+
+O código-fonte das telas fica em `frontend/` (Angular). Só é preciso
+Node.js para **alterar** as telas:
+
+```bash
+cd frontend
+npm install
+npm start          # http://localhost:4200, com recarga automática
+```
+
+Deixe o `python api.py` rodando ao mesmo tempo: o `npm start` encaminha
+as chamadas `/api` para ele. Ao terminar, gere a versão compilada
+(vai para `interface/`, que é versionada) e faça o commit:
+
+```bash
+npm run build
+```

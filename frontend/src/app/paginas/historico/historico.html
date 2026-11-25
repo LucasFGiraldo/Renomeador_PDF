@@ -1,0 +1,62 @@
+<main>
+  <h1>Histórico</h1>
+
+  <div class="filtros">
+    <input
+      class="busca"
+      placeholder="Buscar por nome do arquivo"
+      [value]="busca()"
+      (input)="filtrar('busca', $any($event.target).value)"
+    />
+    <select [value]="status()" (change)="filtrar('status', $any($event.target).value)">
+      <option value="">Todos</option>
+      <option value="sucesso">Renomeados</option>
+      <option value="erro">Erros</option>
+    </select>
+    <span class="espaco"></span>
+    @if (erro()) {
+      <span class="peq erro">{{ erro() }}</span>
+    } @else {
+      <span class="peq suave">{{ total().toLocaleString('pt-BR') }} {{ total() === 1 ? 'registro' : 'registros' }}</span>
+    }
+  </div>
+
+  <div class="painel">
+    <table>
+      <thead>
+        <tr>
+          <th class="c-data">Data / hora</th>
+          <th class="c-orig">Arquivo original</th>
+          <th>Novo nome</th>
+          <th class="c-status">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of visiveis(); track $index) {
+          <tr>
+            <td class="peq suave">{{ dataHora(r.data_hora) }}</td>
+            <td class="mono">{{ r.arquivo_original }}</td>
+            <td>
+              @if (r.status === 'sucesso') {
+                <span class="mono">{{ r.novo_nome }}</span>
+              } @else {
+                <span class="peq erro">{{ r.erro }}</span>
+              }
+            </td>
+            <td class="peq" [class.suave]="r.status === 'sucesso'" [class.erro]="r.status === 'erro'">
+              {{ r.status === 'sucesso' ? 'Renomeado' : 'Erro' }}
+            </td>
+          </tr>
+        } @empty {
+          <tr><td colspan="4" class="vazio">Nenhum registro encontrado.</td></tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="paginas">
+      <span class="peq suave">{{ faixa() }}</span>
+      <button class="btn" (click)="pagina.set(pagina() - 1)" [disabled]="pagina() === 0">Anterior</button>
+      <button class="btn" (click)="pagina.set(pagina() + 1)" [disabled]="pagina() >= ultimaPagina()">Próxima</button>
+    </div>
+  </div>
+</main>

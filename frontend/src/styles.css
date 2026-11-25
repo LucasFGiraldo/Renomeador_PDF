@@ -1,0 +1,107 @@
+/* Estilo global — segue o protótipo aprovado (minimalista, cores sóbrias) */
+
+:root {
+  --fundo: #f5f5f3;
+  --superficie: #ffffff;
+  --sutil: #fafaf8;
+  --borda: #e3e3df;
+  --texto: #1d1f21;
+  --suave: #6b6e70;
+  --primaria: #2e3a46;
+  --erro: #a2453b;
+  --selecao: #eeeeeb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font: 14px/1.4 Inter, system-ui, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+}
+
+/* Texto */
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  font-size: 12px;
+}
+.suave { color: var(--suave); }
+.erro { color: var(--erro); }
+.peq { font-size: 12px; }
+.rotulo { font-size: 12px; font-weight: 500; color: var(--suave); }
+
+/* Página */
+main {
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1440px;
+}
+h1 { font-size: 20px; font-weight: 600; }
+
+/* Painel com borda */
+.painel {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.painel > .cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--borda);
+  font-size: 13px;
+  font-weight: 600;
+}
+.painel > .cab a {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--suave);
+  text-decoration: none;
+}
+.vazio { padding: 20px; font-size: 13px; color: var(--suave); }
+
+/* Botões */
+.btn {
+  font: 500 13px Inter, system-ui, sans-serif;
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto);
+  cursor: pointer;
+}
+.btn.prim { background: var(--primaria); border-color: var(--primaria); color: #fff; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+/* Campos */
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo label { font-size: 12px; font-weight: 500; color: var(--suave); }
+input, select {
+  font: 13px Inter, system-ui, sans-serif;
+  padding: 8px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+input:focus, select:focus { outline: 1px solid var(--primaria); outline-offset: -1px; }
+input.falta { border-color: var(--erro); }
+.check { display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; }
+.check input { width: 16px; height: 16px; accent-color: var(--primaria); margin: 0; padding: 0; }
+
+/* Nome de arquivo gerado */
+.nome {
+  padding: 10px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  background: var(--sutil);
+  word-break: break-all;
+  min-height: 38px;
+}

@@ -1,0 +1,73 @@
+<main>
+  <h1>Erros</h1>
+
+  @if (aviso(); as a) {
+    <div class="peq" [class.erro]="a.erro" [class.suave]="!a.erro">{{ a.texto }}</div>
+  }
+
+  @if (carregou() && !lista().length) {
+    <div class="painel vazio">Nenhum PDF na pasta de erros.</div>
+  } @else {
+    <div class="grade">
+      <div class="painel lista">
+        @for (i of lista(); track i.arquivo) {
+          <button class="item" [class.sel]="i.arquivo === selecionado()" (click)="selecionar(i.arquivo)">
+            <span class="mono">{{ i.arquivo }}</span>
+            <span class="peq erro">{{ i.erro ?? 'Motivo não registrado' }}</span>
+          </button>
+        }
+      </div>
+
+      @if (item(); as i) {
+        <div class="painel detalhe">
+          <div>
+            <div class="mono titulo">{{ i.arquivo }}</div>
+            @if (i.erro) {
+              <div class="peq erro">{{ i.erro }}</div>
+            }
+          </div>
+
+          <div class="corpo">
+            @if (urlPdfSegura(); as url) {
+              <iframe class="pdf" [src]="url" title="PDF"></iframe>
+            }
+
+            @let d = dados();
+            @let f = faltando();
+            <div class="formulario">
+              <div class="campo">
+                <label for="cliente">Favorecido</label>
+                <input id="cliente" [value]="d.cliente ?? ''" [class.falta]="f.cliente"
+                       (input)="alterar('cliente', $any($event.target).value)" />
+              </div>
+              <div class="dupla">
+                <div class="campo">
+                  <label for="data">Data do pagamento</label>
+                  <input id="data" placeholder="DD-MM-AAAA" [value]="d.data ?? ''" [class.falta]="f.data"
+                         (input)="alterar('data', $any($event.target).value)" />
+                </div>
+                <div class="campo">
+                  <label for="valor">Valor (R$)</label>
+                  <input id="valor" placeholder="1.234,56" [value]="d.valor ?? ''" [class.falta]="f.valor"
+                         (input)="alterar('valor', $any($event.target).value)" />
+                </div>
+              </div>
+
+              <div class="grupo">
+                <span class="rotulo">Nome que será usado</span>
+                <div class="nome" [class.mono]="previa().ok" [class.peq]="!previa().ok" [class.suave]="!previa().ok">
+                  {{ previa().texto }}
+                </div>
+              </div>
+
+              <div class="acoes">
+                <button class="btn prim" (click)="renomear()" [disabled]="enviando() || !previa().ok">Renomear</button>
+                <a class="btn" [href]="urlPdf()" target="_blank">Abrir PDF</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</main>

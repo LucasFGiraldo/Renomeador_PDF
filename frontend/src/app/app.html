@@ -1,0 +1,35 @@
+<header>
+  <span class="marca">Renomeador de PDFs</span>
+
+  <nav>
+    <a routerLink="/painel" routerLinkActive="ativo">Painel</a>
+    <a routerLink="/configuracao" routerLinkActive="ativo">Configuração</a>
+    <a routerLink="/historico" routerLinkActive="ativo">Histórico</a>
+    <a routerLink="/erros" routerLinkActive="ativo">
+      Erros@if (estado.status()?.com_erro) { ({{ estado.status()!.com_erro }}) }
+    </a>
+  </nav>
+
+  <div class="monitor">
+    @if (estado.offline()) {
+      <span class="erro">API desconectada</span>
+    } @else if (estado.status(); as status) {
+      @if (estado.erroMonitor()) {
+        <span class="erro peq">{{ estado.erroMonitor() }}</span>
+      }
+      @if (status.monitor.erro) {
+        <span class="erro peq">Monitor parou: {{ status.monitor.erro }}</span>
+      }
+      <span class="suave">
+        @if (status.monitor.parando) { Pausando… }
+        @else if (status.monitor.ativo) { Monitor ativo }
+        @else { Monitor pausado }
+      </span>
+      <button class="btn" (click)="estado.alternarMonitor()" [disabled]="status.monitor.parando">
+        {{ status.monitor.ativo ? 'Pausar' : 'Iniciar' }}
+      </button>
+    }
+  </div>
+</header>
+
+<router-outlet />
