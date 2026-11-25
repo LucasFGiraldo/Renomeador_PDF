@@ -8,6 +8,8 @@ Como rodar:
 
     python api.py
 
+(ou sem janela, como faz o atalho criado pelo instalar.bat: pythonw api.py)
+
 Documentação interativa (dá para testar cada rota pelo navegador):
 
     http://localhost:8000/docs
@@ -17,12 +19,23 @@ import os
 import re
 import sys
 import threading
+import time
+from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Optional
 
 # Os arquivos config_user.txt, historico.txt etc. usam caminhos
 # relativos, então a API sempre roda a partir da pasta do projeto.
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+# Sem janela (pythonw) não existe terminal: as mensagens vão para o
+# servidor.log. Ao passar de 1 MB, o log antigo vira servidor.log.1.
+if sys.stdout is None or sys.stderr is None:
+    if os.path.exists("servidor.log") and os.path.getsize("servidor.log") > 1_000_000:
+        os.replace("servidor.log", "servidor.log.1")
+    _log = open("servidor.log", "a", encoding="utf-8", buffering=1)
+    sys.stdout = sys.stdout or _log
+    sys.stderr = sys.stderr or _log
 
 # Os print() do monitor usam emojis (👀, ✔). Fora de um terminal (ex.:
 # saída redirecionada para arquivo), o Windows usa uma codificação sem
@@ -47,9 +60,16 @@ import processador
 import renomeador
 
 
+@asynccontextmanager
+async def _ciclo_de_vida(app):
+    threading.Thread(target=_iniciar_automaticamente, daemon=True).start()
+    yield
+
+
 app = FastAPI(
     title="Renomeador de PDFs",
     description="API local da interface do sistema de renomeação de comprovantes.",
+    lifespan=_ciclo_de_vida,
 )
 
 # Servidor de desenvolvimento do Angular (ng serve)
@@ -151,10 +171,26 @@ class _ControleMonitor:
         try:
             monitor.monitorar_pasta(parar=self._parar)
         except Exception as erro:
-            self.erro = str(erro)
+            self.erro = f"O monitor parou: {erro}"
 
 
 _monitor = _ControleMonitor()
+
+
+def _iniciar_automaticamente():
+    """Ao subir o servidor, já liga o monitor se houver configuração.
+    Logo após o login, a unidade de rede (Z:) pode ainda não estar
+    conectada: nesse caso tenta de novo a cada 15 segundos."""
+    while not _monitor.ativo:
+        if _ler_configuracao() is None:
+            return
+        try:
+            _monitor.iniciar()
+            print("Monitor iniciado automaticamente.")
+            return
+        except OSError as erro:
+            _monitor.erro = f"Aguardando as pastas ficarem acessíveis: {erro}"
+            time.sleep(15)
 
 
 # ---------------------------------------------------------------------

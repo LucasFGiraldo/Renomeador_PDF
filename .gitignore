@@ -6,3 +6,5 @@ claude/
 config.py
 *.jsonl
 !interface/3rdpartylicenses.txt
+*.log
+*.log.1

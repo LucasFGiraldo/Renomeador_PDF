@@ -20,6 +20,33 @@
    `PASTA_ENTRADA/ERRO_PROCESSAMENTO/`, para não ficar sendo
    reprocessado (e re-logado como erro) a cada varredura.
 
+## Instalação no computador de uso (sem terminal)
+
+Feito uma única vez por quem instala; depois, quem usa só precisa do
+atalho na Área de Trabalho.
+
+1. Instale o Python (python.org), marcando **"Add Python to PATH"**.
+2. Baixe o projeto (`git clone` ou `git pull`) e crie o `config.py`
+   com os caminhos das pastas (veja a seção *Caminhos* abaixo).
+3. Dê dois cliques em **`instalar.bat`**.
+
+O instalador (não precisa de administrador):
+
+- instala as dependências Python;
+- faz o sistema ligar sozinho, **sem janela**, sempre que o usuário
+  entrar no Windows. O monitor também já começa ligado, se houver
+  configuração salva; se a unidade de rede ainda não estiver
+  conectada, ele espera e tenta de novo;
+- cria o atalho **"Renomeador de PDFs"** na Área de Trabalho, que abre
+  o sistema no navegador (e liga o servidor, se ele estiver desligado).
+
+As mensagens do servidor ficam em `servidor.log`. Para desfazer, use
+**`desinstalar.bat`** (não apaga arquivos nem histórico).
+
+Depois de um `git pull` com mudanças no código, reinicie o servidor:
+rode o `desinstalar.bat` e o `instalar.bat` de novo (ou reinicie o
+computador).
+
 ## Como rodar
 
 ```bash

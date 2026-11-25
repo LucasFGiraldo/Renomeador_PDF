@@ -12,13 +12,13 @@
 
   <div class="monitor">
     @if (estado.offline()) {
-      <span class="erro">API desconectada</span>
+      <span class="erro">Sistema desligado. Abra pelo atalho "Renomeador de PDFs" da Área de Trabalho.</span>
     } @else if (estado.status(); as status) {
       @if (estado.erroMonitor()) {
         <span class="erro peq">{{ estado.erroMonitor() }}</span>
       }
       @if (status.monitor.erro) {
-        <span class="erro peq">Monitor parou: {{ status.monitor.erro }}</span>
+        <span class="erro peq">{{ status.monitor.erro }}</span>
       }
       <span class="suave">
         @if (status.monitor.parando) { Pausando… }
