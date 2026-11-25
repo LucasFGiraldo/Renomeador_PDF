@@ -32,17 +32,25 @@ Pressione `CTRL+C` para parar.
 
 ## Como customizar para o seu tipo de PDF
 
-O ponto mais importante para ajustar é o **`extrator.py`**. Os
-padrões (regex) atuais procuram por linhas como:
+O `extrator.py` é genérico: funciona por **rótulos** (`Nome:`,
+`Valor:`, `Data Pagamento:`...) e **cabeçalhos de seção**
+(`Favorecido`, `Dados de quem recebeu`...), e não por banco. Cada
+rótulo é procurado nas três disposições que o `pypdf` costuma gerar:
 
 ```
-Cliente: João Silva      (ou "Favorecido:" / "Nome:")
-Data: 10/06/2026         (ou "Vencimento:" / "Emissão:")
-Valor: R$ 1.234,56       (ou "Total:")
+Nome: FULANO                 (mesma linha)
+Nome:                        (linha de baixo — ex.: banco XO)
+ FULANO
+FULANONome:                  (invertido — ex.: Bradesco)
 ```
 
-Se os PDFs reais tiverem outro layout/rótulos, ajuste as expressões
-regulares em `extrair_informacoes()`. Uma forma rápida de descobrir o
+Quando o comprovante tem dois nomes (quem pagou e quem recebeu), vale
+o que estiver mais perto de um cabeçalho de favorecido/recebedor. A
+data de pagamento tem prioridade sobre a de vencimento, e o valor
+pago/total sobre o valor de face.
+
+Se um banco novo usar outro rótulo ou cabeçalho, acrescente-o nas
+listas do início do `extrator.py` (`_ROTULOS_*` e `_CABECALHOS_*`). Uma forma rápida de descobrir o
 texto exato é rodar:
 
 ```python
