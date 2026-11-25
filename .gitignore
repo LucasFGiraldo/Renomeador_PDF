@@ -4,3 +4,4 @@ __pycache__/
 !requisitos.txt
 claude/
 config.py
+*.jsonl

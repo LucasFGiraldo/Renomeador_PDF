@@ -17,11 +17,17 @@ def _arquivo_esta_estavel(caminho):
         return False
 
 
-def _mover_para_pasta_erro(caminho_pdf):
-    #Move um PDF que falhou no processamento para uma subpasta
-    #dentro da PASTA_SAIDA, evitando que ele seja reprocessado (e re-logado como erro) a cada nova varredura.
+def pasta_erros():
+    #PASTA_ERROS_PDF pode ser um caminho completo ou só o nome de uma
+    #subpasta dentro da PASTA_RESULTADOS.
+    return os.path.join(config.PASTA_RESULTADOS, config.PASTA_ERROS_PDF)
 
-    pasta_erro = os.path.join(config.PASTA_RESULTADOS, config.PASTA_ERROS_PDF)
+
+def _mover_para_pasta_erro(caminho_pdf):
+    #Move um PDF que falhou no processamento para a pasta de erros,
+    #evitando que ele seja reprocessado (e re-logado como erro) a cada nova varredura.
+
+    pasta_erro = pasta_erros()
     os.makedirs(pasta_erro, exist_ok=True)
 
     destino = os.path.join(pasta_erro, os.path.basename(caminho_pdf))
@@ -39,7 +45,7 @@ def _mover_para_pasta_erro(caminho_pdf):
         print(f"✖ Não foi possível mover '{caminho_pdf}' para a pasta de erro: {erro}")
 
 
-def _listar_pdfs_pendentes():
+def listar_pdfs_pendentes():
     """Lista os PDFs na PASTA_ENTRADA, ignorando a subpasta de erro."""
 
     if not os.path.isdir(config.PASTA_ENTRADA):
@@ -66,7 +72,7 @@ def processar_pasta_uma_vez():
         print(f"✖ Pasta de entrada não encontrada: {config.PASTA_ENTRADA}")
         return
 
-    for caminho_pdf in _listar_pdfs_pendentes():
+    for caminho_pdf in listar_pdfs_pendentes():
 
         if not _arquivo_esta_estavel(caminho_pdf):
             # Ainda sendo copiado/colado na pasta - tenta de novo na próxima varredura
@@ -79,7 +85,24 @@ def processar_pasta_uma_vez():
             _mover_para_pasta_erro(caminho_pdf)
 
 
-def monitorar_pasta(intervalo=None):
+def listar_pdfs_com_erro():
+    """Lista os PDFs que estão na pasta de erros."""
+
+    pasta = pasta_erros()
+    if not os.path.isdir(pasta):
+        return []
+
+    return [
+        os.path.join(pasta, nome)
+        for nome in os.listdir(pasta)
+        if nome.lower().endswith(config.EXTENSAO_MONITORADA)
+        and os.path.isfile(os.path.join(pasta, nome))
+    ]
+
+
+def monitorar_pasta(intervalo=None, parar=None):
+    #parar: threading.Event opcional. Quando a API pede para parar, o
+    #loop termina no fim da varredura atual (no terminal, use CTRL+C).
 
     intervalo = intervalo or config.INTERVALO_MONITORAMENTO
 
@@ -88,8 +111,11 @@ def monitorar_pasta(intervalo=None):
     print("Pressione CTRL+C para encerrar.\n")
 
     try:
-        while True:
+        while parar is None or not parar.is_set():
             processar_pasta_uma_vez()
-            time.sleep(intervalo)
+            if parar is None:
+                time.sleep(intervalo)
+            else:
+                parar.wait(intervalo)
     except KeyboardInterrupt:
         print("\nMonitoramento encerrado pelo usuário.")

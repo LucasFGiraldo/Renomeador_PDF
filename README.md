@@ -23,12 +23,44 @@
 ## Como rodar
 
 ```bash
-pip install -r requisitos.txt
+python -m pip install -r requisitos.txt
+```
+
+Há dois jeitos de usar o sistema (use um ou outro, não os dois ao
+mesmo tempo, para não haver dois monitores na mesma pasta):
+
+**Modo terminal** — pergunta as configurações e já começa a monitorar.
+Pressione `CTRL+C` para parar.
+
+```bash
 python main.py
 ```
 
-Deixe o terminal aberto — ele fica monitorando continuamente.
-Pressione `CTRL+C` para parar.
+**Modo API (para a interface web)** — sobe um servidor local; a
+configuração e o monitor passam a ser controlados pela tela (ou pela
+documentação interativa em http://localhost:8000/docs).
+
+```bash
+python api.py
+```
+
+Principais rotas da API:
+
+| Rota | O que faz |
+|---|---|
+| `GET /api/status` | Monitor ligado/desligado, fila, erros, totais do dia, pastas acessíveis |
+| `POST /api/monitor/iniciar` / `parar` | Liga ou desliga o monitor |
+| `GET` / `PUT /api/configuracao` | Lê ou salva sufixo e campos do nome |
+| `POST /api/configuracao/previa` | Mostra como ficaria o nome, sem renomear nada |
+| `GET /api/historico` | Eventos de renomeação (filtros `status` e `busca`) |
+| `GET /api/erros` | PDFs na pasta de erros e o motivo |
+| `GET /api/erros/{arquivo}/pdf` | Abre o PDF com erro no navegador |
+| `POST /api/erros/{arquivo}/reprocessar` | Tenta de novo, com dados corrigidos à mão (opcional) |
+| `POST /api/pdfs` | Envia PDFs para a pasta de entrada |
+
+A API só aceita conexões do próprio computador (`127.0.0.1`).
+Além do `historico.txt` e do `erros.txt`, os eventos também são
+gravados em `registros.jsonl`, que é o que a interface lê.
 
 ## Como customizar para o seu tipo de PDF
 

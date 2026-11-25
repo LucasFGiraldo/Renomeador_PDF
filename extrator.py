@@ -9,18 +9,18 @@ nas três disposições que o pypdf costuma gerar:
 
 1. MESMA LINHA (layout comum):
 
-       Nome: ADVOCACIA FERNANDO RUDGE LEITE
+       Nome: ESCRITORIO EXEMPLO DE ADVOCACIA
 
 2. LINHA DE BAIXO, podendo continuar em mais linhas (ex.: banco XO):
 
        Nome:
 
-        ALPHA EMPREENDIMENTOS E PARTICIPACOES DE
+        EMPRESA EXEMPLO PARTICIPACOES E
        NEGOCIOS LTDA
 
 3. INVERTIDA, com o valor colado ANTES do rótulo (ex.: Bradesco):
 
-       FILIPE CAROLINO COELHO MENome:
+       JOAO DA SILVA EXEMPLO MENome:
 
 Comprovantes costumam ter DOIS nomes: o de quem pagou (a própria
 empresa) e o de quem recebeu. Para pegar o certo, cada "Nome:" é
