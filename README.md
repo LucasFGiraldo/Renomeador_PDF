@@ -151,3 +151,19 @@ as chamadas `/api` para ele. Ao terminar, gere a versão compilada
 ```bash
 npm run build
 ```
+
+## O que não vai para o GitHub
+
+Este repositório é **público**. Ficam só no computador (estão no
+`.gitignore`):
+
+- `config.py` — caminhos das pastas da empresa;
+- `config_user.txt`, `historico.db`, `servidor.log` e os antigos
+  `historico.txt` / `erros.txt` / `registros.jsonl` — configuração e
+  histórico de uso, com nomes e valores de comprovantes;
+- `__pycache__/`, `frontend/node_modules/`, `frontend/.angular/` —
+  gerados automaticamente;
+- `frontend/.vscode/` e outras configurações de editor.
+
+Exemplos em código e documentação usam sempre nomes fictícios
+(ex.: "EMPRESA EXEMPLO SERVICOS LTDA"), nunca dados de comprovantes reais.
