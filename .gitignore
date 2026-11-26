@@ -8,3 +8,5 @@ config.py
 !interface/3rdpartylicenses.txt
 *.log
 *.log.1
+*.db
+*.db-journal

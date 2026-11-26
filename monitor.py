@@ -81,7 +81,7 @@ def processar_pasta_uma_vez():
         try:
             processador.processar_pdf(caminho_pdf)
         except Exception:
-            # processador já registrou o erro em erros.txt
+            # processador já registrou o erro no histórico (historico.db)
             _mover_para_pasta_erro(caminho_pdf)
 
 

@@ -24,7 +24,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Optional
 
-# Os arquivos config_user.txt, historico.txt etc. usam caminhos
+# Os arquivos config_user.txt, historico.db etc. usam caminhos
 # relativos, então a API sempre roda a partir da pasta do projeto.
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -199,11 +199,6 @@ def _iniciar_automaticamente():
 
 @app.get("/api/status", tags=["Status"])
 def status():
-    hoje = datetime.now().date().isoformat()
-    registros_hoje = [
-        r for r in logger.ler_registros() if r["data_hora"].startswith(hoje)
-    ]
-
     return {
         "monitor": {
             "ativo": _monitor.ativo,
@@ -219,10 +214,7 @@ def status():
         },
         "fila": len(monitor.listar_pdfs_pendentes()),
         "com_erro": len(monitor.listar_pdfs_com_erro()),
-        "hoje": {
-            "sucessos": sum(r["status"] == "sucesso" for r in registros_hoje),
-            "erros": sum(r["status"] == "erro" for r in registros_hoje),
-        },
+        "hoje": logger.contar_do_dia(),
     }
 
 
@@ -294,17 +286,7 @@ def historico(
 ):
     """Eventos de renomeação, do mais recente para o mais antigo.
     status: "sucesso" ou "erro". busca: trecho do nome do arquivo."""
-    registros = logger.ler_registros()
-    if status:
-        registros = [r for r in registros if r["status"] == status]
-    if busca:
-        termo = busca.lower()
-        registros = [
-            r for r in registros
-            if termo in r["arquivo_original"].lower()
-            or termo in (r.get("novo_nome") or "").lower()
-        ]
-    return registros[:limite]
+    return logger.buscar_registros(status, busca, limite)
 
 
 # ---------------------------------------------------------------------
@@ -314,10 +296,7 @@ def historico(
 @app.get("/api/erros", tags=["Erros"])
 def listar_erros():
     """PDFs que estão hoje na pasta de erros, com o último erro registrado."""
-    ultimos_erros = {}
-    for registro in logger.ler_registros():
-        if registro["status"] == "erro":
-            ultimos_erros.setdefault(registro["arquivo_original"], registro)
+    ultimos_erros = logger.ultimo_erro_por_arquivo()
 
     itens = []
     for caminho in monitor.listar_pdfs_com_erro():

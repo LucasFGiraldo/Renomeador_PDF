@@ -15,10 +15,12 @@
    - monta o nome final combinando o fixo + as variáveis marcadas como
      "S" (`renomeador.py`);
    - move o arquivo já renomeado para `PASTA_RESULTADOS`.
-4. Sucessos vão para `historico.txt`. Falhas vão para `erros.txt` e o
-   PDF problemático é movido para
-   `PASTA_ENTRADA/ERRO_PROCESSAMENTO/`, para não ficar sendo
-   reprocessado (e re-logado como erro) a cada varredura.
+4. Sucessos e falhas ficam registrados no banco SQLite `historico.db`
+   (veja na tela Histórico). O PDF que falhou é movido para a pasta de
+   erros (`PASTA_ERROS_PDF`), para não ficar sendo reprocessado (e
+   registrado como erro) a cada varredura. Quem vinha das versões com
+   `historico.txt`/`erros.txt` tem esse histórico importado para o
+   banco automaticamente na primeira execução.
 
 ## Instalação no computador de uso (sem terminal)
 
@@ -90,8 +92,7 @@ Principais rotas da API:
 
 A documentação interativa da API fica em http://localhost:8000/docs.
 A API só aceita conexões do próprio computador (`127.0.0.1`).
-Além do `historico.txt` e do `erros.txt`, os eventos também são
-gravados em `registros.jsonl`, que é o que a interface lê.
+O histórico (sucessos e erros) fica no banco SQLite `historico.db`.
 
 ## Como customizar para o seu tipo de PDF
 
