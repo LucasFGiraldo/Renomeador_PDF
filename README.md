@@ -28,8 +28,9 @@ Feito uma única vez por quem instala; depois, quem usa só precisa do
 atalho na Área de Trabalho.
 
 1. Instale o Python (python.org), marcando **"Add Python to PATH"**.
-2. Baixe o projeto (`git clone` ou `git pull`) e crie o `config.py`
-   com os caminhos das pastas (veja a seção *Caminhos* abaixo).
+2. Baixe o projeto (`git clone` ou `git pull`), copie o
+   `config_exemplo.py` com o nome `config.py` e troque só os caminhos
+   das pastas (veja a seção *Caminhos* abaixo).
 3. Dê dois cliques em **`instalar.bat`**.
 
 O instalador (não precisa de administrador):
@@ -126,6 +127,10 @@ e ver como o texto realmente sai (o `pypdf` às vezes junta ou separa
 linhas de forma diferente do PDF visual).
 
 ## Caminhos (`config.py`)
+
+O `config.py` não vai para o GitHub. Use o `config_exemplo.py` como
+modelo: copie, renomeie para `config.py` e altere os caminhos.
+
 
 - `PASTA_ENTRADA`: pasta monitorada (onde os PDFs são colados).
 - `PASTA_RESULTADOS`: pasta onde os PDFs já renomeados são colocados.

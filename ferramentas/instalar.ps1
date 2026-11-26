@@ -23,7 +23,7 @@ if (-not (Test-Path $pythonw)) { throw "pythonw.exe nao encontrado ao lado de $p
 
 # Arquivo de caminhos (nao vem pelo GitHub)
 if (-not (Test-Path (Join-Path $raiz 'config.py'))) {
-    throw 'Falta o arquivo config.py com os caminhos das pastas (veja o README).'
+    throw 'Falta o arquivo config.py. Copie o config_exemplo.py, renomeie para config.py e ajuste os caminhos das pastas.'
 }
 
 Write-Host '- Instalando dependencias (pode levar um minuto)...'
