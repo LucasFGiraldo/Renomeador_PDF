@@ -115,7 +115,22 @@ _REGEX_DATA = re.compile(r"(\d{2})[/.-](\d{2})[/.-](\d{4})")
 _REGEX_VALOR = re.compile(r"(?<![\d,.])(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{2})(?![\d,])")
 
 
+# Rótulo quebrado em duas linhas (ex.: boleto do Bradesco):
+#     EMPRESA EXEMPLO LTDARazão Social
+#     Beneficiário:
+_INICIO_ROTULO_QUEBRADO = re.compile(
+    r"(Raz.o\s+Social|Nome\s+Fantasia|CPF/CNPJ(\s+Benefici.rio)?)[ \t]*$", re.IGNORECASE
+)
+_FIM_ROTULO_QUEBRADO = re.compile(
+    r"^[ \t]*(Benefici.rio(\s+Final)?|Final|Pagador|Recebedor)[ \t]*:[ \t]*$", re.IGNORECASE
+)
+
+# Valores que não identificam ninguém
+_SEM_VALOR = re.compile(r"^(n.o\s+informado|-+|n/?a)$", re.IGNORECASE)
+
+
 def extrair_informacoes(texto):
+    texto = _juntar_rotulos_quebrados(texto)
     dados = {}
 
     cliente = _extrair_cliente(texto)
@@ -277,7 +292,27 @@ def _distancia(linha, linhas_cabecalho):
     return min(abs(linha - c) for c in linhas_cabecalho)
 
 
+def _juntar_rotulos_quebrados(texto):
+    linhas = texto.splitlines()
+    resultado = []
+    i = 0
+    while i < len(linhas):
+        linha = linhas[i]
+        if (
+            i + 1 < len(linhas)
+            and _INICIO_ROTULO_QUEBRADO.search(linha)
+            and _FIM_ROTULO_QUEBRADO.match(linhas[i + 1])
+        ):
+            linha = linha.rstrip() + " " + linhas[i + 1].strip()
+            i += 1
+        resultado.append(linha)
+        i += 1
+    return "\n".join(resultado)
+
+
 def _limpar(texto):
     # Remove espaços extras e limita o tamanho para não gerar nomes de arquivo absurdamente longos.
     texto = re.sub(r"\s+", " ", texto).strip()
+    if _SEM_VALOR.match(texto):
+        return None
     return texto[:60].strip()
